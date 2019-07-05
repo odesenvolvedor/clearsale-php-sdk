@@ -18,5 +18,7 @@
       "ClearSale": "src"
     }
   },
-  "homepage": "https://github.com/odesenvolvedor/clearsale-php-sdk"
+  "homepage": "https://github.com/odesenvolvedor/clearsale-php-sdk",
+  "minimum-stability" : "dev",
+  "prefer-stable" : true    
 }
