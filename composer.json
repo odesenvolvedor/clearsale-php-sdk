@@ -1,0 +1,22 @@
+{
+  "name": "odesenvolvedor/clearsale-php-sdk",
+  "description": "ClearSale API Client",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fernando Campos de Oliveira",
+      "role": "developer",
+      "email": "fernando@odesenvolvedor.net"
+    }
+  ],
+  "require": {
+    "php": ">=5.4"
+  },
+  "autoload" : {
+    "psr-4": {
+      "ClearSale\\": "src"
+    }
+  },
+  "minimum-stability" : "dev",
+  "prefer-stable" : true
+}
