@@ -19,6 +19,6 @@
     }
   },
   "homepage": "https://github.com/odesenvolvedor/clearsale-php-sdk",
-  "minimum-stability" : "dev",
+  "minimum-stability" : "dev-master",
   "prefer-stable" : true    
 }
