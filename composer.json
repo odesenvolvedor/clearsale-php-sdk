@@ -1,8 +1,13 @@
 {
   "name": "odesenvolvedor/clearsale-php-sdk",
   "description": "ClearSale API Client",
+  "version": "1.0.0",
+  "homepage": "https://github.com/odesenvolvedor/clearsale-php-sdk",
   "license": "MIT",
   "type": "library",
+  "keywords": [
+      "ClearSale"
+  ],
   "authors": [
     {
       "name": "Fernando Campos de Oliveira",
@@ -13,12 +18,11 @@
   "require": {
     "php": ">=5.6"
   },
-  "autoload" : {
-    "psr-0": {
-      "ClearSale": "src"
+  "autoload": {
+    "psr-4": {
+      "ClearSale\\": "src/",     
     }
-  },
-  "homepage": "https://github.com/odesenvolvedor/clearsale-php-sdk",
+  },  
   "minimum-stability" : "dev",
   "prefer-stable" : true    
 }
