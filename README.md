@@ -5,7 +5,7 @@ Clearsale is a Brazilian fraud risk management company operating in the physical
 
 ### Requirements
 
-- PHP >= 5.4
+- PHP >= 5.6
 
 ### Install
 
