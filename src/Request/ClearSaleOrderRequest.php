@@ -42,9 +42,7 @@ use ClearSale\Environment\Environment;
  * @package ClearSale\Request
  */
 class ClearSaleOrderRequest extends AbstractRequest
-{    
-    private $auth;
-        
+{            
     /**
      * ClearSaleOrderRequest constructor.
      *
@@ -53,8 +51,7 @@ class ClearSaleOrderRequest extends AbstractRequest
      */
     public function __construct(Environment $environment, Auth $auth)
     {
-        $this->auth = $auth;
-        parent::__construct($environment);
+        parent::__construct($environment, $auth);
     }
 
     /**
@@ -64,18 +61,56 @@ class ClearSaleOrderRequest extends AbstractRequest
      * @throws \ClearSale\Request\ClearSaleRequestException
      * @throws \RuntimeException
      */
-    public function execute($order)
+    public function send($order)
     {
-
-        $headers = [
-            'Authorization: Bearer ' . $this->auth->getToken($this->environment)
-        ];
-
+        $headers = $this->getHeaders();
         $url = $this->environment->getEndpoint() . 'v1/orders/';
-
         return $this->sendRequest('POST', $url, $order, $headers);
     }
 
+    /**
+     * @param string $orderCode
+     * @return array
+     */
+    public function statusCheck($orderCode)
+    {
+        $headers = $this->getHeaders();
+        $url = $this->environment->getEndpoint() . 'v1/orders/' . $orderCode . '/status';        
+        return $this->sendRequest('GET', $url, $order, $headers);        
+    }
+
+    /**
+     * @param string $orderCode
+     * @param string $orderStatus
+     * @return array
+     */
+    public function statusUpdate($orderCode, $orderStatus)
+    {
+        $headers = $this->getHeaders();
+        $params = ['status' => $orderStatus];
+        $url = $this->environment->getEndpoint() . 'v1/orders/' . $orderCode . '/status';        
+        return $this->sendRequest('PUT', $url, $params, $headers);                
+    }
+
+    /**
+     * @param array $orderCodes
+     * @param string $message
+     * @return array
+     */
+    public function chargeBack(array $orderCodes, $message)
+    {
+        $codes = [];
+        foreach ($orderCodes as $code) {
+            $codes[] = (string) $code;
+        }
+        $params = [
+            'message' => $message,
+            'orders' => $codes
+        ];        
+        $url = $this->environment->getEndpoint() . 'v1/chargeback';        
+        return $this->sendRequest('POST', $url, $params, $headers);                        
+    }
+    
     /**
      * @param $json
      *

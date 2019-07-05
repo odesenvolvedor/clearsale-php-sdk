@@ -45,15 +45,19 @@ abstract class AbstractRequest
 {
        
     protected $environment;
+    
+    protected $auth;
             
     /**
      * AbstractSaleRequest constructor.
      *
      * @param Environment $environment
      */
-    public function __construct(Environment $environment)
+    public function __construct(Environment $environment, Auth $auth = null)
     {
         $this->environment = $environment;
+        
+        $this->auth        = $auth;
     }
 
     /**
@@ -61,7 +65,7 @@ abstract class AbstractRequest
      *
      * @return mixed
      */
-    public abstract function execute($param);
+    public abstract function send($param);
 
     /**
      * @param             $method
@@ -165,4 +169,9 @@ abstract class AbstractRequest
      * @return mixed
      */
     protected abstract function unserialize($json);
+    
+    protected function getHeaders()
+    {
+        return [ 'Authorization: Bearer ' . $this->auth->getToken($this->environment) ];
+    }
 }
