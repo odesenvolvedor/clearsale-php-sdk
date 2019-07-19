@@ -32,7 +32,7 @@
 
 namespace ClearSale;
 
-class OrderList extends Entity
+class OrderList extends Entity implements \JsonSerializable
 {
     /**
      * @var integer
@@ -60,5 +60,14 @@ class OrderList extends Entity
         $this->typeID = $typeID;
     }
 
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
+    }
 
 }

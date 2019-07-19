@@ -32,7 +32,7 @@
 
 namespace ClearSale;
 
-class Connection extends Entity
+class Connection extends Entity implements \JsonSerializable
 {
     /**
      * @var string
@@ -147,4 +147,14 @@ class Connection extends Entity
         $this->fareClass = $fareClass;
     }
 
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
+    }
+    
 }

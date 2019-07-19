@@ -32,7 +32,7 @@
 
 namespace ClearSale;
 
-class SocialNetwork extends Entity
+class SocialNetwork extends Entity implements \JsonSerializable
 {
     const FACEBOOK = 1;
     const TWITTER = 2;
@@ -82,4 +82,15 @@ class SocialNetwork extends Entity
     {
         return $this->asInteger($this->typeSocialNetwork);
     }
+    
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
+    }
+    
 }

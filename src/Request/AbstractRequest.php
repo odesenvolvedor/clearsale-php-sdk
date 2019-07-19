@@ -78,8 +78,10 @@ abstract class AbstractRequest
      * @throws \ClearSale\Request\ClearSaleRequestException
      * @throws \RuntimeException
      */
-    protected function sendRequest($method, $url, $content = null, $headers = [])
+    protected function sendRequest($method, $url, \JsonSerializable $content = null, $headers = [])
     {
+
+        //print_r($content);
 
         $curl = curl_init($url);
 
@@ -101,14 +103,13 @@ abstract class AbstractRequest
 
             $headers[] = 'Content-Type: application/json';
         } else {
-            $headers[] = 'Content-Length: 0';
+            $headers[] = 'Accept: application/json';
         }
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
         $response   = curl_exec($curl);
-
         $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         if (curl_errno($curl)) {
@@ -130,7 +131,6 @@ abstract class AbstractRequest
      */
     protected function readResponse($statusCode, $responseBody)
     {
-
         $unserialized = null;
 
         switch ($statusCode) {
@@ -141,10 +141,11 @@ abstract class AbstractRequest
             case 400:
             case 401:
                 $exception = null;
+                $responseBody = str_replace('[0].', '', $responseBody);
                 $response  = json_decode($responseBody);
-                if (!empty($response)) {
-                    foreach ($response as $error) {
-                        $ClearSaleError = new ClearSaleError($error->Message, $error->Code);
+                if (!empty($response)) {                    
+                    foreach ($response->ModelState as $k => $error) {
+                        $ClearSaleError = new ClearSaleError($response->Message . PHP_EOL . $k . PHP_EOL . $error[0], $statusCode);
                         $exception  = new ClearSaleRequestException('Request Error', $statusCode, $exception);
                         $exception->setClearSaleError($ClearSaleError);
                     }
@@ -154,7 +155,7 @@ abstract class AbstractRequest
                     $exception->setClearSaleError($ClearSaleError);
                 }
                 throw $exception;
-            case 404:
+            case 404:                
                 throw new ClearSaleRequestException('Resource not found', 404, null);
             default:
                 throw new ClearSaleRequestException('Unknown status', $statusCode);
@@ -172,6 +173,7 @@ abstract class AbstractRequest
     
     protected function getHeaders()
     {
-        return [ 'Authorization: Bearer ' . $this->auth->getToken($this->environment) ];
+        $token = $this->auth->authenticate($this->environment);
+        return [ 'Authorization: Bearer ' . $token->getToken() ];
     }
 }

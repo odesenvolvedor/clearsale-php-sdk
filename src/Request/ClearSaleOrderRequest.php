@@ -65,6 +65,7 @@ class ClearSaleOrderRequest extends AbstractRequest
     {
         $headers = $this->getHeaders();
         $url = $this->environment->getEndpoint() . 'v1/orders/';
+
         return $this->sendRequest('POST', $url, $order, $headers);
     }
 
@@ -76,7 +77,7 @@ class ClearSaleOrderRequest extends AbstractRequest
     {
         $headers = $this->getHeaders();
         $url = $this->environment->getEndpoint() . 'v1/orders/' . $orderCode . '/status';        
-        return $this->sendRequest('GET', $url, $order, $headers);        
+        return $this->sendRequest('GET', $url, null, $headers);        
     }
 
     /**
@@ -87,9 +88,10 @@ class ClearSaleOrderRequest extends AbstractRequest
     public function statusUpdate($orderCode, $orderStatus)
     {
         $headers = $this->getHeaders();
-        $params = ['status' => $orderStatus];
+        $status = new \ClearSale\Status();
+        $status->setStatus($orderStatus);
         $url = $this->environment->getEndpoint() . 'v1/orders/' . $orderCode . '/status';        
-        return $this->sendRequest('PUT', $url, $params, $headers);                
+        return $this->sendRequest('PUT', $url, $status, $headers);                
     }
 
     /**

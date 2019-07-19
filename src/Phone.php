@@ -32,7 +32,7 @@
 
 namespace ClearSale;
 
-class Phone extends Entity
+class Phone extends Entity implements \JsonSerializable
 {
     const UNDEFINED = 0;
     const HOME = 1;
@@ -127,9 +127,18 @@ class Phone extends Entity
     }
 
     public function setExtension($extension) {
-        $this->extension = $extension;
+        $this->extension = $this->asString($extension);
         return $this;
     }
 
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
+    }
 
 }

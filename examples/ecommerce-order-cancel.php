@@ -2,20 +2,19 @@
 
 date_default_timezone_set('America/Sao_Paulo');
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../autoload.php';
 
 try {
     $environment = new ClearSale\Environment\Environment(new ClearSale\Environment\Sandbox());
     
-    $auth = new \ClearSale\Auth\Login('c', 'c');
+    $auth = new \ClearSale\Auth\Login('login', 'senha');
     
     $orderRequest = new \ClearSale\Request\ClearSaleOrderRequest($environment, $auth);
     
     $orderCode = 'ORDER_EXAMPLE_2_0_1';
     
-    print_r($orderRequest->statusUpdate($orderCode, \ClearSale\Status::STATUS_CANCELLED));
+    print_r($orderRequest->statusUpdate($orderCode, \ClearSale\Status::CANCELLED_CUSTOMER));
         
 } catch (ClearSale\Request\ClearSaleRequestException $exception) {
-    $error = $exception->getClearSaleError(); 
-    echo $error->getMessage();
+    print_r($exception);
 }

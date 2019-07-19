@@ -32,7 +32,7 @@
 
 namespace ClearSale;
 
-class Hotel extends Entity
+class Hotel extends Entity implements \JsonSerializable
 {
     /**
      * @var string
@@ -138,4 +138,14 @@ class Hotel extends Entity
         $this->checkOutDate = $checkOutDate;
     }
 
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
+    }
+    
 }

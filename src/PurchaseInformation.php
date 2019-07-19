@@ -32,7 +32,7 @@
 
 namespace ClearSale;
 
-class PurchaseInformation extends Entity
+class PurchaseInformation extends Entity implements \JsonSerializable
 {
     /**
      * @var \DateTime
@@ -153,4 +153,15 @@ class PurchaseInformation extends Entity
     {
         return $this->asBool($this->purchaseLogged);
     }
+    
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
+    }
+    
 }

@@ -32,7 +32,7 @@
 
 namespace ClearSale;
 
-class Item extends Entity
+class Item extends Entity implements \JsonSerializable
 {
     /**
      * @var string
@@ -166,4 +166,14 @@ class Item extends Entity
         return $this;
     }
 
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
+    }
+    
 }

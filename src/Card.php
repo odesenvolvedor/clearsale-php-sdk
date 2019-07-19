@@ -32,7 +32,7 @@
 
 namespace ClearSale;
 
-class Card extends Entity
+class Card extends Entity implements \JsonSerializable
 {
     const DINERS = 1;
     const MASTERCARD = 2;
@@ -146,6 +146,13 @@ class Card extends Entity
         $this->nsu = $nsu;
         return $this;
     }
-
-
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
+    }
 }
