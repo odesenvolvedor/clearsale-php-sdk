@@ -198,7 +198,23 @@ class Order extends Entity implements \JsonSerializable, ClearSaleInterface
      * @var Hotel[]
      */
     private $hotels = [];
-        
+
+    /**
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    
     /**
      * @return \DateTime
      */
