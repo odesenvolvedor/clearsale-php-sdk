@@ -32,7 +32,7 @@
 
 namespace ClearSale;
 
-class Address extends Entity
+class Address extends Entity implements \JsonSerializable
 {
     /**
      * @var string
@@ -49,6 +49,11 @@ class Address extends Entity
      */
     private $additionalInformation;
 
+    /**
+     * @var string
+     */    
+    private $county;
+    
     /**
      * @var string
      */
@@ -89,6 +94,11 @@ class Address extends Entity
         return $this;
     }
 
+    public function setCounty($county) {
+        $this->county = $county;
+        return $this;
+    }
+    
     public function setCity($city) {
         $this->city = $city;
         return $this;
@@ -114,4 +124,13 @@ class Address extends Entity
         return $this;
     }
 
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
+    }    
 }

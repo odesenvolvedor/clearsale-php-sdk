@@ -198,17 +198,7 @@ class Order extends Entity implements \JsonSerializable, ClearSaleInterface
      * @var Hotel[]
      */
     private $hotels = [];
-    
-    /**
-     * @var string
-     */    
-    private $packageID;
-
-    /**
-     * @var mixed;
-     */
-    private $orders;
-    
+        
     /**
      * @return \DateTime
      */
@@ -598,10 +588,14 @@ class Order extends Entity implements \JsonSerializable, ClearSaleInterface
     public static function fromJson($json)
     {
         $object = json_decode($json);
-
         $order = new Order();
         $order->populate($object);
 
+        foreach ($order as $k => $v) {
+            if (empty($v)) {
+                unset($order->$k);
+            }
+        }
         return $order;
     }
 
@@ -612,17 +606,28 @@ class Order extends Entity implements \JsonSerializable, ClearSaleInterface
     {
         $dataProps = get_object_vars($data);
 
-        if (isset($dataProps['packageID'])) {
-            $this->packageID = $data->packageID;
+        if (!empty($dataProps)) {
+            foreach ($dataProps as $k => $v) {
+                $this->$k = $v;
+            }
         }
-        
-        if (isset($dataProps['orders'])) {
-            $this->orders = $data->orders;
-        }        
+//        if (isset($dataProps['packageID'])) {
+//            $this->packageID = $data->packageID;
+//        }
+//        
+//        if (isset($dataProps['orders'])) {
+//            $this->orders = $data->orders;
+//        }        
     }
     
     public function jsonSerialize() {
-        return get_object_vars($this);
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
     }
 
 }

@@ -32,7 +32,7 @@
 
 namespace ClearSale;
 
-class Status
+class Status implements \JsonSerializable
 {
     const APPROVAL_AUTOMATIC = 'APA';
     const APPROVAL_MANUAL = 'APM';
@@ -53,4 +53,26 @@ class Status
 
     const PAYMENT_APPROVED = 'PGA';
     const PAYMENT_DENIED = 'PGR';
+    
+    private $status;
+    
+    public function getStatus() {
+        return $this->status;
+    }
+
+    public function setStatus($status) {
+        $this->status = $status;
+        return $this;
+    }
+
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
+    }
+
 }

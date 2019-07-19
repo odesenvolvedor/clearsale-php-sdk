@@ -32,7 +32,7 @@
 
 namespace ClearSale;
 
-class Payment extends Entity
+class Payment extends Entity implements \JsonSerializable
 {
     const TYPE_CREDIT_CARD = 1;
     const TYPE_BANK_SLEEP = 2;
@@ -59,7 +59,7 @@ class Payment extends Entity
     private $sequential;
 
     /**
-     * @var \DateTime
+     * @var string
      */
     private $date;
 
@@ -195,7 +195,7 @@ class Payment extends Entity
         return $this;
     }
 
-    public function setDate(\DateTime $date) {
+    public function setDate($date) {
         $this->date = $this->asDateTimeVal($date);
         return $this;
     }
@@ -235,5 +235,14 @@ class Payment extends Entity
         return $this;
     }
 
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
+    }
 
 }

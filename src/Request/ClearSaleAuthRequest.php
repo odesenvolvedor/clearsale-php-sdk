@@ -47,27 +47,18 @@ class ClearSaleAuthRequest extends AbstractRequest
      * @param string $password
      * @return Token
      */
-    public function getToken($login, $password)
-    {
-        $params = [
-            'name' => $login,
-            'password' => $password
-        ];
-        
-        return $this->send($params);
+    public function getToken($auth)
+    {        
+        return $this->send($auth);
     }
 
     protected function unserialize($json) {
-        
+        return Token::fromJson($json);
     }
 
     public function send($params) {
         $url = $this->environment->getEndpoint() . 'v1/authenticate/';
-        
-        $body = $this->sendRequest('POST', $url, $params);
-
-        return new Token($body['Token'], new \DateTime($body['ExpirationDate']));
-        
+        return $this->sendRequest('POST', $url, $params);      
     }
 
 }

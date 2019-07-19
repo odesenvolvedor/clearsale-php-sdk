@@ -32,9 +32,7 @@
 
 namespace ClearSale\Auth;
 
-use ClearSale\Service\AuthService;
-
-class Token implements Auth
+class Token
 {
     /**
      * @var string
@@ -45,23 +43,22 @@ class Token implements Auth
      * @var \DateTime
      */
     protected $expirationDate;
+//
+//    /**
+//     * Auth constructor.
+//     * @param string $token
+//     * @param \DateTime $expirationDate
+//     */
+//    public function __construct($token, \DateTime $expirationDate)
+//    {
+//        $this->token = $token;
+//        $this->expirationDate = $expirationDate;
+//    }
 
     /**
-     * Auth constructor.
-     * @param string $token
-     * @param \DateTime $expirationDate
-     */
-    public function __construct($token, \DateTime $expirationDate)
-    {
-        $this->token = $token;
-        $this->expirationDate = $expirationDate;
-    }
-
-    /**
-     * @param AuthService $service
      * @return string
      */
-    public function getToken(AuthService $service)
+    public function getToken()
     {
         return $this->token;
     }
@@ -73,4 +70,47 @@ class Token implements Auth
     {
         return $this->expirationDate;
     }
+    
+   /**
+     * @param $json
+     *
+     * @return Order
+     */
+    public static function fromJson($json)
+    {
+        $object = json_decode($json);
+
+        $token = new Token();
+        $token->populate($object);
+
+        return $token;
+    }
+
+    /**
+     * @param \stdClass $data
+     */
+    public function populate(\stdClass $data)
+    {
+
+        $dataProps = get_object_vars($data);
+
+        if (isset($dataProps['Token'])) {
+            $this->token = $data->Token;
+        }
+        
+        if (isset($dataProps['ExpirationDate'])) {
+            $this->expirationDate = $data->ExpirationDate;
+        }        
+    }
+    
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
+    }
+    
 }

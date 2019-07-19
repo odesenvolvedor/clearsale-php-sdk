@@ -32,7 +32,7 @@
 
 namespace ClearSale;
 
-class Passenger extends Entity
+class Passenger extends Entity implements \JsonSerializable
 {
     /**
      * @var string
@@ -122,4 +122,14 @@ class Passenger extends Entity
         $this->cpf = $cpf;
     }
 
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
+    }
+    
 }

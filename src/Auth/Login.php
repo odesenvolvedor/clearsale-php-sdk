@@ -34,12 +34,12 @@ namespace ClearSale\Auth;
 
 use ClearSale\Request\ClearSaleAuthRequest;
 
-class Login implements Auth
+class Login implements Auth, \JsonSerializable
 {
     /**
      * @var string
      */
-    protected $login;
+    protected $name;
 
     /**
      * @var string
@@ -53,18 +53,29 @@ class Login implements Auth
      */
     public function __construct($login, $password)
     {
-        $this->login = $login;
+        $this->name = $login;
         $this->password = $password;
     }
 
     /**
-     * @param AuthService $service
+     * @param Environment $environment
      * @return string
      */
-    public function getToken(\ClearSale\Environment\Environment $environment)
+    public function authenticate(\ClearSale\Environment\Environment $environment)
     {
-        $service = new ClearSaleAuthRequest($environment);
-        $token = $service->getToken($this->login, $this->password);
-        return $token->getToken($service);
+        $auth = new ClearSaleAuthRequest($environment);
+        $token = $auth->getToken($this);
+        return $token;
     }
+
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
+    }
+
 }

@@ -38,5 +38,5 @@ interface Auth
     /**
      * @return string
      */
-    public function getToken(Environment $environment);
+    public function authenticate(Environment $environment);
 }

@@ -45,7 +45,8 @@ abstract class Entity
         }
         if (is_string($val)) {
             $asDate = strlen($val) == 10;
-            return \DateTime::createFromFormat('Y-m-d H:i:s', $asDate ? $val . ' 00:00:00' : $val);
+            $dateTime = \DateTime::createFromFormat('Y-m-d H:i:s', $asDate ? $val . ' 00:00:00' : $val);
+            return $dateTime->format('Y-m-d H:i:s.u');
         }
         return $val;
     }
@@ -92,7 +93,15 @@ abstract class Entity
         if (!is_bool($val)) {
             return boolval($val);
         }
+        return $val;        
+    }
+    
+    protected function asString($val)
+    {
+        if (is_null($val)) {
+            return '';
+        }
         return $val;
     }
-            
+                
 }

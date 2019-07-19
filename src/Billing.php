@@ -32,7 +32,7 @@
 
 namespace ClearSale;
 
-class Billing extends Entity
+class Billing extends Entity implements \JsonSerializable
 {
     const PERSON_NATURAL = 1;
     const PERSON_LEGAL = 2;
@@ -184,5 +184,15 @@ class Billing extends Entity
     public function setEmail($email) {
         $this->email = $email;
         return $this;
+    }    
+    
+    public function jsonSerialize() {
+        $arr = get_object_vars($this);
+        foreach ($arr as $k => $v) {
+            if (empty($v)) {
+                unset ($arr[$k]);
+            }
+        }
+        return $arr;
     }    
 }
