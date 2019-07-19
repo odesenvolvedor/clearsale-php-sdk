@@ -15,14 +15,16 @@ composer require odesenvolvedor/clearsale-php-sdk
 
 ### Usage
 ```php
+require_once __DIR__ . '/../autoload.php';
+
 try {
     $environment = new ClearSale\Environment\Environment(new ClearSale\Environment\Sandbox());
     
-    $auth = new \ClearSale\Auth\Login('c', 'c');
-    
+    $auth = new \ClearSale\Auth\Login('login', 'senha');
+
     $orderRequest = new \ClearSale\Request\ClearSaleOrderRequest($environment, $auth);
 
-    $orderCode = 'ORDER_EXAMPLE_4001';
+    $orderCode = 'ORDER_EXAMPLE_2_0_3';
     
     $billingAddress = new \ClearSale\Address();
     $billingAddress->setStreet('Street name')
@@ -31,6 +33,7 @@ try {
                     ->setCountry('Brazil')
                     ->setState('SP')
                     ->setCity('São Paulo')
+                    ->setCounty('County name')
                     ->setReference('Address reference')
                     ->setZipcode('00000000');
 
@@ -52,16 +55,18 @@ try {
             ];
     
     $card = new ClearSale\Card();
-    $card->setBin('000000')
+    $card->setNumber('000000xxxxxx0001')
+            ->setHash('12345678945612301234569874563210')
+            ->setBin('000000')
             ->setEnd('0001')
             ->setType(ClearSale\Card::VISA)
             ->setValidityDate('12/2022')
             ->setOwnerName('Owner Card Name')
             ->setDocument('1234567890');
 
-  $payment1 = new \ClearSale\Payment();
+    $payment1 = new \ClearSale\Payment();
     $payment1->setSequential(1)
-            ->setDate(new DateTime('now'))
+            ->setDate('2019-01-01')
             ->setValue(37.00)
             ->setType(1)
             ->setInstallments(1)
@@ -90,16 +95,18 @@ try {
     $order = new \ClearSale\Order();
     $order->setCode($orderCode)
             ->setSessionId(md5(uniqid(rand())))
-            ->setDate(new DateTime('now'))
+            ->setDate('2019-01-01')
             ->setEmail('email@email.com.br')
             ->setTotalValue(37.00)
             ->setNumberOfInstallments(1)
             ->setIp('192.168.0.1')
+            ->setStatus(ClearSale\Status::STATUS_NEW)
+            ->setProduct($order::PRODUCT_TICKETS)
             ->getBilling()
                 ->setClientID('Cliente123')
                 ->setType(\ClearSale\Billing::PERSON_NATURAL)
-                ->setPrimaryDocument(12345678910)
-                ->setSecondaryDocument(12345678)
+                ->setPrimaryDocument('12345678910')
+                ->setSecondaryDocument('12345678')
                 ->setName('Complete Client Name')
                 ->setBirthDate('1985-06-11')
                 ->setEmail('email@example.com')
@@ -113,8 +120,8 @@ try {
     $order->getShipping()
                 ->setClientID('Cliente123')
                 ->setType(\ClearSale\Billing::PERSON_NATURAL)
-                ->setPrimaryDocument(12345678910)
-                ->setSecondaryDocument(12345678)
+                ->setPrimaryDocument('12345678910')
+                ->setSecondaryDocument('12345678')
                 ->setName('Complete Client Name')
                 ->setBirthDate('1985-06-11')
                 ->setEmail('email@example.com')
@@ -130,6 +137,7 @@ try {
                     ->setCountry('Brazil')
                     ->setState('SP')
                     ->setCity('São Paulo')
+                    ->setCounty('County name')
                     ->setReference('Address reference')
                     ->setZipcode('00000000');
 
@@ -138,12 +146,10 @@ try {
     $order->setPayments($payments)
           ->setItems($items);
     
-  //print_r($order);
-  //die;
-    $orderRequest->send($order);        
-    print_r($orderRequest);
+    print_r($orderRequest->send($order));
 } catch (\ClearSale\Request\ClearSaleRequestException $exception) {
     $error = $exception->getClearSaleError(); 
     echo $error->getMessage();
 }
+
 ```
