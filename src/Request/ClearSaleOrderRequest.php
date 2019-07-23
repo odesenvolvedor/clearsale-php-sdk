@@ -65,7 +65,6 @@ class ClearSaleOrderRequest extends AbstractRequest
     {
         $headers = $this->getHeaders();
         $url = $this->environment->getEndpoint() . 'v1/orders/';
-
         return $this->sendRequest('POST', $url, $order, $headers);
     }
 

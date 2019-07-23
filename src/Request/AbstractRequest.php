@@ -80,9 +80,6 @@ abstract class AbstractRequest
      */
     protected function sendRequest($method, $url, \JsonSerializable $content = null, $headers = [])
     {
-
-        //print_r($content);
-
         $curl = curl_init($url);
 
         curl_setopt($curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);

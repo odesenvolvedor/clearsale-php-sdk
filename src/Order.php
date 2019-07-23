@@ -34,7 +34,7 @@ namespace ClearSale;
 
 use ClearSale\ClearSaleInterface;
 
-class Order extends Entity implements \JsonSerializable, ClearSaleInterface
+class Order extends Entity implements ClearSaleSerializable, ClearSaleInterface
 {
     const PRODUCT_OTHER = -1;
     const PRODUCT_APPLICATION = 1;
@@ -119,6 +119,11 @@ class Order extends Entity implements \JsonSerializable, ClearSaleInterface
      */
     private $channelID;
 
+    /**
+     * @var string
+     */
+    private $packageID;
+    
     /**
      * @var \DateTime
      */
@@ -492,7 +497,7 @@ class Order extends Entity implements \JsonSerializable, ClearSaleInterface
     }
     
     public function setCode($code) {
-        $this->code = $code;
+        $this->code = $this->asString($code);
         return $this;
     }
 
@@ -522,7 +527,7 @@ class Order extends Entity implements \JsonSerializable, ClearSaleInterface
     }
 
     public function setTotalValue($totalValue) {
-        $this->totalValue = $totalValue;
+        $this->totalValue = $this->asDecimal($totalValue);
         return $this;
     }
 
@@ -627,13 +632,6 @@ class Order extends Entity implements \JsonSerializable, ClearSaleInterface
                 $this->$k = $v;
             }
         }
-//        if (isset($dataProps['packageID'])) {
-//            $this->packageID = $data->packageID;
-//        }
-//        
-//        if (isset($dataProps['orders'])) {
-//            $this->orders = $data->orders;
-//        }        
     }
     
     public function jsonSerialize() {
@@ -642,7 +640,7 @@ class Order extends Entity implements \JsonSerializable, ClearSaleInterface
             if (empty($v)) {
                 unset ($arr[$k]);
             }
-        }
+        }        
         return $arr;
     }
 

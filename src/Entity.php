@@ -99,7 +99,10 @@ abstract class Entity
     protected function asString($val)
     {
         if (is_null($val)) {
-            return '';
+            return null;
+        }
+        if (!is_string($val)) {
+            return strval($val);
         }
         return $val;
     }

@@ -157,7 +157,7 @@ class Billing extends Entity implements \JsonSerializable
     }
     
     public function setClientID($clientID) {
-        $this->clientID = $clientID;
+        $this->clientID = $this->asString($clientID);
         return $this;
     }
 

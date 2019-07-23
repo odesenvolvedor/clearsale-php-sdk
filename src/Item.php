@@ -117,7 +117,7 @@ class Item extends Entity implements \JsonSerializable
     }
     
     public function setCode($code) {
-        $this->code = $code;
+        $this->code = $this->asString($code);
         return $this;
     }
 
@@ -173,7 +173,6 @@ class Item extends Entity implements \JsonSerializable
                 unset ($arr[$k]);
             }
         }
-        return $arr;
-    }
-    
+        return $arr;        
+    }    
 }

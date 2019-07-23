@@ -5,7 +5,7 @@ require_once __DIR__ . '/../autoload.php';
 try {
     $environment = new ClearSale\Environment\Environment(new ClearSale\Environment\Sandbox());
     
-    $auth = new \ClearSale\Auth\Login('user', 'password');
+    $auth = new \ClearSale\Auth\Login('GlobalEntretenimento', 'GXrKdc6b2s');
 
     $orderRequest = new \ClearSale\Request\ClearSaleOrderRequest($environment, $auth);
 
