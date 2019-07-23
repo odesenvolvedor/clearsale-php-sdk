@@ -153,3 +153,6 @@ try {
 }
 
 ```
+#=== doar-paypal-brasil ===
+Contributors: Fernando Campos (odesenvolvedor)
+Donate account: fernando@odesenvolvedor.net
