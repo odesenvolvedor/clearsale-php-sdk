@@ -522,7 +522,7 @@ class Order extends Entity implements ClearSaleSerializable, ClearSaleInterface
     }
 
     public function setItemValue($itemValue) {
-        $this->itemValue = $itemValue;
+        $this->itemValue = $this->asDecimal($itemValue);
         return $this;
     }
 
