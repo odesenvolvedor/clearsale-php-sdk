@@ -112,17 +112,17 @@ class Phone extends Entity implements \JsonSerializable
     }
     
     public function setDdi($ddi) {
-        $this->ddi = $ddi;
+        $this->ddi = $this->asInteger($ddi);
         return $this;
     }
 
     public function setDdd($ddd) {
-        $this->ddd = $ddd;
+        $this->ddd = $this->asInteger($ddd);
         return $this;
     }
 
     public function setNumber($number) {
-        $this->number = $number;
+        $this->number = $this->asInteger($number);
         return $this;
     }
 

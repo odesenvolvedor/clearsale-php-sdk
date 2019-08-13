@@ -30,69 +30,19 @@
  * THE SOFTWARE.
  */
 
-namespace ClearSale\Request;
+namespace ClearSale;
 
 /**
- * Class ClearSaleRequestException
+ * Interface ClearSaleSerializable
  *
- * @package ClearSale\Request
+ * @package ClearSale\API30\Ecommerce
  */
-class ClearSaleRequestException extends \Exception
+interface ClearSaleSerializable extends \JsonSerializable
 {
-
-    private $ClearSaleError;
-    private $ClearSaleResponseHeader;
-
     /**
-     * ClearSaleRequestException constructor.
+     * @param \stdClass $data
      *
-     * @param string $message
-     * @param int    $code
-     * @param null   $previous
-     */
-    public function __construct($message, $code, $previous = null)
-    {
-        parent::__construct($message, $code, $previous);
-    }
-
-    /**
      * @return mixed
      */
-    public function getClearSaleError()
-    {
-        return $this->ClearSaleError;
-    }
-
-    /**
-     * @param ClearSaleError $ClearSaleError
-     *
-     * @return $this
-     */
-    public function setClearSaleError(ClearSaleError $ClearSaleError)
-    {
-        $this->ClearSaleError = $ClearSaleError;
-
-        return $this;
-    }
-    
-    /**
-     * @return mixed
-     */
-    public function getClearSaleResponseHeader()
-    {
-        return $this->ClearSaleResponseHeader;
-    }
-
-    /**
-     * @param mixed $ClearSaleResponseHeader
-     *
-     * @return $this
-     */
-    public function setClearSaleResponseHeader($ClearSaleResponseHeader)
-    {
-        $this->ClearSaleResponseHeader = $ClearSaleResponseHeader;
-
-        return $this;
-    }
-    
+    public function populate(\stdClass $data);
 }

@@ -36,6 +36,8 @@ use ClearSale\Auth\Auth;
 use ClearSale\Environment\Environment;
 use ClearSale\Request\ClearSaleRequestException;
 
+use Illuminate\Support\Facades\Log;
+
 /**
  * Class AbstractSaleRequest
  *
@@ -47,6 +49,8 @@ abstract class AbstractRequest
     protected $environment;
     
     protected $auth;
+    
+    private $responseHeader;
             
     /**
      * AbstractSaleRequest constructor.
@@ -80,9 +84,6 @@ abstract class AbstractRequest
      */
     protected function sendRequest($method, $url, \JsonSerializable $content = null, $headers = [])
     {
-
-        //print_r($content);
-
         $curl = curl_init($url);
 
         curl_setopt($curl, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
@@ -108,12 +109,13 @@ abstract class AbstractRequest
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-
-        $response   = curl_exec($curl);
+        curl_setopt($curl, CURLOPT_HEADERFUNCTION, [$this, "handleHeaderLine"]);
+        
+        $response   = curl_exec($curl);        
         $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         if (curl_errno($curl)) {
-            throw new \RuntimeException('Curl error: ' . curl_error($curl));
+            throw new ClearSaleRequestException('Curl error: ' . curl_error($curl), 400);
         }
 
         curl_close($curl);
@@ -121,6 +123,21 @@ abstract class AbstractRequest
         return $this->readResponse($statusCode, $response);
     }
 
+    /**
+     * @param type $curl
+     * @param type $headerLine
+     * 
+     * @return int
+     */
+    
+    public function handleHeaderLine( $curl, $headerLine ) 
+    {
+        $explode = explode( ':', $headerLine );
+        if ( isset( $explode[1] ) )
+            $this->responseHeader[trim($explode[0])] = trim($explode[1]) ;
+        return strlen($headerLine);
+    }    
+    
     /**
      * @param $statusCode
      * @param $responseBody
@@ -132,7 +149,7 @@ abstract class AbstractRequest
     protected function readResponse($statusCode, $responseBody)
     {
         $unserialized = null;
-
+       
         switch ($statusCode) {
             case 200:
             case 201:
@@ -141,24 +158,32 @@ abstract class AbstractRequest
             case 400:
             case 401:
                 $exception = null;
-                $responseBody = str_replace('[0].', '', $responseBody);
+                $responseBody = str_replace('[0]', 'order', $responseBody);
                 $response  = json_decode($responseBody);
-                if (!empty($response)) {                    
+                if (!empty($response)) {
+                    $errors = [];
                     foreach ($response->ModelState as $k => $error) {
-                        $ClearSaleError = new ClearSaleError($response->Message . PHP_EOL . $k . PHP_EOL . $error[0], $statusCode);
-                        $exception  = new ClearSaleRequestException('Request Error', $statusCode, $exception);
-                        $exception->setClearSaleError($ClearSaleError);
+                        $errors[$k] = $error;
                     }
+                    $ClearSaleError = new ClearSaleError($errors, $statusCode);
+                    $exception = new ClearSaleRequestException('Request Error', $statusCode, $exception);
+                    $exception->setClearSaleError($ClearSaleError);
                 } else {
-                    $ClearSaleError = new ClearSaleError($responseBody, $statusCode);
+                    $ClearSaleError = new ClearSaleError(['error' => $responseBody], $statusCode);
                     $exception = new ClearSaleRequestException('Request Error', $statusCode, $exception);
                     $exception->setClearSaleError($ClearSaleError);
                 }
+                
+                $exception->setClearSaleResponseHeader($this->responseHeader);
                 throw $exception;
             case 404:                
-                throw new ClearSaleRequestException('Resource not found', 404, null);
+                $exception = new ClearSaleRequestException('Resource not found', 404, null);
+                $exception->setClearSaleResponseHeader($this->responseHeader);
+                throw $exception;
             default:
-                throw new ClearSaleRequestException('Unknown status', $statusCode);
+                $exception = new ClearSaleRequestException('Unknown status', $statusCode);
+                $exception->setClearSaleResponseHeader($this->responseHeader);
+                throw $exception;
         }
 
         return $unserialized;

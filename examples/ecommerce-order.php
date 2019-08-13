@@ -4,13 +4,13 @@ require_once __DIR__ . '/../autoload.php';
 
 try {
     $environment = new ClearSale\Environment\Environment(new ClearSale\Environment\Sandbox());
-    
-    $auth = new \ClearSale\Auth\Login('user', 'password');
+
+    $auth = new \ClearSale\Auth\Login('GlobalEntretenimento', 'GXrKdc6b2s');
 
     $orderRequest = new \ClearSale\Request\ClearSaleOrderRequest($environment, $auth);
 
     $orderCode = 'ORDER_EXAMPLE_2_0_3';
-    
+
     $billingAddress = new \ClearSale\Address();
     $billingAddress->setStreet('Street name')
                     ->setNumber('1')
@@ -27,18 +27,18 @@ try {
             ->setDdi(55)
             ->setDdd(11)
             ->setNumber(333333333);
-    
+
     $phone2 = new ClearSale\Phone();
     $phone2->setType(\ClearSale\Phone::MOBILE)
             ->setDdi(55)
             ->setDdd(11)
             ->setNumber(999999999);
-    
+
     $phones = [
                 $phone1,
                 $phone2
             ];
-    
+
     $card = new ClearSale\Card();
     $card->setNumber('000000xxxxxx0001')
             ->setHash('12345678945612301234569874563210')
@@ -64,7 +64,7 @@ try {
     $payments = [
         $payment1
     ];
-    
+
     $item1 = new ClearSale\Item();
     $item1->setCode('100')
             ->setName('Item Description')
@@ -72,11 +72,11 @@ try {
             ->setAmount(1)
             ->setCategoryID(1)
             ->setCategoryName('Item category name');
-    
+
     $items = [
         $item1
     ];
-    
+
     $order = new \ClearSale\Order();
     $order->setCode($orderCode)
             ->setSessionId(md5(uniqid(rand())))
@@ -96,12 +96,12 @@ try {
                 ->setBirthDate('1985-06-11')
                 ->setEmail('email@example.com')
                 ->setGender(\ClearSale\Gender::MALE);
-    
-    
+
+
     $order->getBilling()
             ->setAddress($billingAddress)
             ->setPhones($phones);
-    
+
     $order->getShipping()
                 ->setClientID('Cliente123')
                 ->setType(\ClearSale\Billing::PERSON_NATURAL)
@@ -111,7 +111,7 @@ try {
                 ->setBirthDate('1985-06-11')
                 ->setEmail('email@example.com')
                 ->setGender(\ClearSale\Gender::MALE)
-                ->setDeliveryType(\ClearSale\Delivery::NORMAL)            
+                ->setDeliveryType(\ClearSale\Delivery::NORMAL)
                 ->setDeliveryTime('2 dias úteis')
                 ->setPickUpStoreDocument('12345678910')
                 ->setPrice(22.00)
@@ -127,12 +127,12 @@ try {
                     ->setZipcode('00000000');
 
     $order->getShipping()->setPhones($phones);
-  
+
     $order->setPayments($payments)
           ->setItems($items);
-    
+
     print_r($orderRequest->send($order));
 } catch (\ClearSale\Request\ClearSaleRequestException $exception) {
-    $error = $exception->getClearSaleError(); 
+    $error = $exception->getClearSaleError();
     echo $error->getMessage();
 }
