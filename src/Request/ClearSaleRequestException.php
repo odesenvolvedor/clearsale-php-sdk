@@ -41,6 +41,7 @@ class ClearSaleRequestException extends \Exception
 {
 
     private $ClearSaleError;
+    private $ClearSaleResponseHeader;
 
     /**
      * ClearSaleRequestException constructor.
@@ -73,4 +74,25 @@ class ClearSaleRequestException extends \Exception
 
         return $this;
     }
+    
+    /**
+     * @return mixed
+     */
+    public function getClearSaleResponseHeader()
+    {
+        return $this->ClearSaleResponseHeader;
+    }
+
+    /**
+     * @param mixed $ClearSaleResponseHeader
+     *
+     * @return $this
+     */
+    public function setClearSaleResponseHeader($ClearSaleResponseHeader)
+    {
+        $this->ClearSaleResponseHeader = $ClearSaleResponseHeader;
+
+        return $this;
+    }
+    
 }
