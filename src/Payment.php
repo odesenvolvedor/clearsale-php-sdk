@@ -238,11 +238,10 @@ class Payment extends Entity implements \JsonSerializable
     public function jsonSerialize() {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
-            if (empty($v)) {
+            if (!is_bool($v) && $v !== 0 && empty($v)) {
                 unset ($arr[$k]);
             }
         }
         return $arr;
     }
-
 }
