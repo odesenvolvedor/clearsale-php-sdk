@@ -134,17 +134,24 @@ class Shipping extends Entity implements \JsonSerializable
         $this->deliveryType = $this->asString($deliveryType);
         return $this;
     }
-    
+    /**
+     * @param string $deliveryTime
+     */    
     public function setDeliveryTime($deliveryTime) {
         $this->deliveryTime = $deliveryTime;
         return $this;
     }
 
+    /**
+     * @param string|float $price
+     */
     public function setPrice($price) {
         $this->price = $this->asDecimal($price);
         return $this;
     }
-
+    /**
+     * @param string $pickUpStoreDocument
+     */
     public function setPickUpStoreDocument($pickUpStoreDocument) {
         $this->pickUpStoreDocument = $pickUpStoreDocument;
         return $this;
@@ -166,7 +173,10 @@ class Shipping extends Entity implements \JsonSerializable
         return $this->asInteger($this->type);
     }
 
-    public function getAddress(): Address {
+    /**
+     * @return Address
+     */
+    public function getAddress() {
         $this->address = empty($this->address) ? new Address() : $this->address;
         return $this->address;
     }
@@ -219,31 +229,49 @@ class Shipping extends Entity implements \JsonSerializable
         return $this;
     }
     
+    /**
+     * @param string $clientID
+     */
     public function setClientID($clientID) {
         $this->clientID = $this->asString($clientID);
         return $this;
     }
 
+    /**
+     * @param string $primaryDocument
+     */
     public function setPrimaryDocument($primaryDocument) {
         $this->primaryDocument = $primaryDocument;
         return $this;
     }
 
+    /**
+     * @param string $secondaryDocument
+     */
     public function setSecondaryDocument($secondaryDocument) {
         $this->secondaryDocument = $secondaryDocument;
         return $this;
     }
 
+    /**
+     * @param string $name
+     */
     public function setName($name) {
         $this->name = $name;
         return $this;
     }
 
+    /**
+     * @param DateTime $birthDate
+     */
     public function setBirthDate($birthDate) {
         $this->birthDate = $this->asDateTimeVal($birthDate);
         return $this;
     }
 
+    /**
+     * @param string $email
+     */
     public function setEmail($email) {
         $this->email = $email;
         return $this;
