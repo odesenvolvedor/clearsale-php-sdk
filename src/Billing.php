@@ -103,7 +103,11 @@ class Billing extends Entity implements \JsonSerializable
         return $this->asInteger($this->type);
     }
 
-    public function getAddress(): Address {
+
+    /**
+     * @return Address
+     */
+    public function getAddress() {
         $this->address = empty($this->address) ? new Address() : $this->address;
         return $this->address;
     }
