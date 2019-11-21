@@ -110,32 +110,37 @@ class Phone extends Entity implements \JsonSerializable
         $this->type = $type;
         return $this;
     }
-    
-    public function setDdi($ddi) {
+
+    public function setDdi($ddi)
+    {
         $this->ddi = $this->asInteger($ddi);
         return $this;
     }
 
-    public function setDdd($ddd) {
+    public function setDdd($ddd)
+    {
         $this->ddd = $this->asInteger($ddd);
         return $this;
     }
 
-    public function setNumber($number) {
+    public function setNumber($number)
+    {
         $this->number = $this->asInteger($number);
         return $this;
     }
 
-    public function setExtension($extension) {
+    public function setExtension($extension)
+    {
         $this->extension = $this->asString($extension);
         return $this;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
             if (!is_bool($v) && $v !== 0 && empty($v)) {
-                unset ($arr[$k]);
+                unset($arr[$k]);
             }
         }
         return $arr;

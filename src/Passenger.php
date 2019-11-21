@@ -73,7 +73,7 @@ class Passenger extends Entity implements \JsonSerializable
      * @var string
      */
     private $cpf;
-    
+
     /**
      * @return int
      */
@@ -89,52 +89,61 @@ class Passenger extends Entity implements \JsonSerializable
     {
         return $this->asDateTimeVal($this->birthdate);
     }
-    
-    public function setName($name) {
+
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
 
-    public function setCompanyMileCard($companyMileCard) {
+    public function setCompanyMileCard($companyMileCard)
+    {
         $this->companyMileCard = $companyMileCard;
         return $this;
     }
 
-    public function setMileCard($mileCard) {
+    public function setMileCard($mileCard)
+    {
         $this->mileCard = $mileCard;
         return $this;
     }
 
-    public function setIdentificationType($identificationType) {
+    public function setIdentificationType($identificationType)
+    {
         $this->identificationType = $identificationType;
         return $this;
     }
 
-    public function setIdentificationNumber($identificationNumber) {
+    public function setIdentificationNumber($identificationNumber)
+    {
         $this->identificationNumber = $identificationNumber;
         return $this;
     }
 
-    public function setGender($gender) {
+    public function setGender($gender)
+    {
         $this->gender = $gender;
         return $this;
     }
 
-    public function setBirthdate(\DateTime $birthdate) {
+    public function setBirthdate(\DateTime $birthdate)
+    {
         $this->birthdate = $birthdate;
         return $this;
     }
 
-    public function setCpf($cpf) {
+    public function setCpf($cpf)
+    {
         $this->cpf = $cpf;
         return $this;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
             if (!is_bool($v) && $v !== 0 && empty($v)) {
-                unset ($arr[$k]);
+                unset($arr[$k]);
             }
         }
         return $arr;

@@ -74,42 +74,50 @@ class PurchaseInformation extends Entity implements \JsonSerializable
      */
     private $login;
 
-    public function setLastDateInsertedMail($lastDateInsertedMail) {
+    public function setLastDateInsertedMail($lastDateInsertedMail)
+    {
         $this->lastDateInsertedMail = $this->asString($lastDateInsertedMail);
         return $this;
     }
 
-    public function setLastDateChangePassword($lastDateChangePassword) {
+    public function setLastDateChangePassword($lastDateChangePassword)
+    {
         $this->lastDateChangePassword = $this->asString($lastDateChangePassword);
         return $this;
     }
 
-    public function setLastDateChangePhone($lastDateChangePhone) {
+    public function setLastDateChangePhone($lastDateChangePhone)
+    {
         $this->lastDateChangePhone = $this->asString($lastDateChangePhone);
         return $this;
     }
 
-    public function setLastDateChangeMobilePhone($lastDateChangeMobilePhone) {
+    public function setLastDateChangeMobilePhone($lastDateChangeMobilePhone)
+    {
         $this->lastDateChangeMobilePhone = $this->asString($lastDateChangeMobilePhone);
         return $this;
     }
 
-    public function setLastDateInsertedAddress($lastDateInsertedAddress) {
+    public function setLastDateInsertedAddress($lastDateInsertedAddress)
+    {
         $this->lastDateInsertedAddress = $this->asString($lastDateInsertedAddress);
         return $this;
     }
 
-    public function setPurchaseLogged($purchaseLogged) {
+    public function setPurchaseLogged($purchaseLogged)
+    {
         $this->purchaseLogged = $this->asBool($purchaseLogged);
         return $this;
     }
 
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
         return $this;
     }
 
-    public function setLogin($login) {
+    public function setLogin($login)
+    {
         $this->login = $login;
         return $this;
     }
@@ -161,12 +169,13 @@ class PurchaseInformation extends Entity implements \JsonSerializable
     {
         return $this->asBool($this->purchaseLogged);
     }
-    
-    public function jsonSerialize() {
+
+    public function jsonSerialize()
+    {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
             if (!is_bool($v) && $v !== 0 && empty($v)) {
-                unset ($arr[$k]);
+                unset($arr[$k]);
             }
         }
         return $arr;

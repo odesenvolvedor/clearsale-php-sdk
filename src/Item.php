@@ -83,7 +83,7 @@ class Item extends Entity implements \JsonSerializable
      * @var string
      */
     private $shippingCompany;
-   
+
     /**
      * @return float
      */
@@ -115,62 +115,73 @@ class Item extends Entity implements \JsonSerializable
     {
         return $this->asBool($this->isGift);
     }
-    
-    public function setCode($code) {
+
+    public function setCode($code)
+    {
         $this->code = $this->asString($code);
         return $this;
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
 
-    public function setValue($value) {
+    public function setValue($value)
+    {
         $this->value = $this->asDecimal($value);
         return $this;
     }
 
-    public function setAmount($amount) {
+    public function setAmount($amount)
+    {
         $this->amount = $this->asInteger($amount);
         return $this;
     }
 
-    public function setCategoryID($categoryID) {
+    public function setCategoryID($categoryID)
+    {
         $this->categoryID = $this->asInteger($categoryID);
         return $this;
     }
 
-    public function setCategoryName($categoryName) {
+    public function setCategoryName($categoryName)
+    {
         $this->categoryName = $categoryName;
         return $this;
     }
 
-    public function setIsGift($isGift) {
+    public function setIsGift($isGift)
+    {
         $this->isGift = $this->asBool($isGift);
         return $this;
     }
 
-    public function setSellerName($sellerName) {
+    public function setSellerName($sellerName)
+    {
         $this->sellerName = $sellerName;
         return $this;
     }
 
-    public function setIsMarketPlace($isMarketPlace) {
+    public function setIsMarketPlace($isMarketPlace)
+    {
         $this->isMarketPlace = $this->asString($isMarketPlace);
         return $this;
     }
 
-    public function setShippingCompany($shippingCompany) {
+    public function setShippingCompany($shippingCompany)
+    {
         $this->shippingCompany = $shippingCompany;
         return $this;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
             if (!is_bool($v) && $v !== 0 && empty($v)) {
-                unset ($arr[$k]);
+                unset($arr[$k]);
             }
         }
         return $arr;

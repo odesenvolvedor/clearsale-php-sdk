@@ -101,57 +101,67 @@ class Card extends Entity implements \JsonSerializable
     {
         return $this->asInteger($this->type);
     }
-    
-    public function setNumber($number) {
+
+    public function setNumber($number)
+    {
         $this->number = $number;
         return $this;
     }
 
-    public function setHash($hash) {
+    public function setHash($hash)
+    {
         $this->hash = $hash;
         return $this;
     }
 
-    public function setBin($bin) {
+    public function setBin($bin)
+    {
         $this->bin = $bin;
         return $this;
     }
 
-    public function setEnd($end) {
+    public function setEnd($end)
+    {
         $this->end = $end;
         return $this;
     }
 
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $this->asInteger($type);
         return $this;
     }
 
-    public function setValidityDate($validityDate) {
+    public function setValidityDate($validityDate)
+    {
         $this->validityDate = $validityDate;
         return $this;
     }
 
-    public function setOwnerName($ownerName) {
+    public function setOwnerName($ownerName)
+    {
         $this->ownerName = $ownerName;
         return $this;
     }
 
-    public function setDocument($document) {
+    public function setDocument($document)
+    {
         $this->document = $document;
         return $this;
     }
 
-    public function setNsu($nsu) {
+    public function setNsu($nsu)
+    {
         $this->nsu = $nsu;
         return $this;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
             if (!is_bool($v) && $v !== 0 && empty($v)) {
-                unset ($arr[$k]);
+                unset($arr[$k]);
             }
         }
         return $arr;

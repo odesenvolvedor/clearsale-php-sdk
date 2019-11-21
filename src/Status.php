@@ -53,23 +53,26 @@ class Status implements \JsonSerializable
 
     const PAYMENT_APPROVED = 'PGA';
     const PAYMENT_DENIED = 'PGR';
-    
+
     private $status;
-    
-    public function getStatus() {
+
+    public function getStatus()
+    {
         return $this->status;
     }
 
-    public function setStatus($status) {
+    public function setStatus($status)
+    {
         $this->status = $status;
         return $this;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
             if (!is_bool($v) && $v !== 0 && empty($v)) {
-                unset ($arr[$k]);
+                unset($arr[$k]);
             }
         }
         return $arr;
