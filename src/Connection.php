@@ -113,48 +113,56 @@ class Connection extends Entity implements \JsonSerializable
     
     public function setCompany($company) {
         $this->company = $company;
+        return $this;
     }
 
     public function setIdentificationNumber($identificationNumber) {
         $this->identificationNumber = $identificationNumber;
+        return $this;
     }
 
     public function setDate(\DateTime $date) {
         $this->date = $date;
+        return $this;
     }
 
     public function setSeatClass($seatClass) {
         $this->seatClass = $seatClass;
+        return $this;
     }
 
     public function setOrigin($origin) {
         $this->origin = $origin;
+        return $this;
     }
 
     public function setDestination($destination) {
         $this->destination = $destination;
+        return $this;
     }
 
     public function setBoarding(\DateTime $boarding) {
         $this->boarding = $boarding;
+        return $this;
     }
 
     public function setArriving(\DateTime $arriving) {
         $this->arriving = $arriving;
+        return $this;
     }
 
     public function setFareClass($fareClass) {
         $this->fareClass = $fareClass;
+        return $this;
     }
 
     public function jsonSerialize() {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
-            if (empty($v)) {
+            if (!is_bool($v) && $v !== 0 && empty($v)) {
                 unset ($arr[$k]);
             }
         }
         return $arr;
     }
-    
 }

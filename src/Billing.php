@@ -103,7 +103,11 @@ class Billing extends Entity implements \JsonSerializable
         return $this->asInteger($this->type);
     }
 
-    public function getAddress(): Address {
+
+    /**
+     * @return Address
+     */
+    public function getAddress() {
         $this->address = empty($this->address) ? new Address() : $this->address;
         return $this->address;
     }
@@ -189,10 +193,10 @@ class Billing extends Entity implements \JsonSerializable
     public function jsonSerialize() {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
-            if (empty($v)) {
+            if (!is_bool($v) && $v !== 0 && empty($v)) {
                 unset ($arr[$k]);
             }
         }
         return $arr;
-    }    
+    }
 }

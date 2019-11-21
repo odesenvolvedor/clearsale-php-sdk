@@ -57,14 +57,17 @@ class SocialNetwork extends Entity implements \JsonSerializable
 
     public function setOptInCompreConfie($optInCompreConfie) {
         $this->optInCompreConfie = $optInCompreConfie;
+        return $this;
     }
 
     public function setTypeSocialNetwork($typeSocialNetwork) {
         $this->typeSocialNetwork = $typeSocialNetwork;
+        return $this;
     }
 
     public function setAuthenticationToken($authenticationToken) {
         $this->authenticationToken = $authenticationToken;
+        return $this;
     }
 
     /**
@@ -86,11 +89,10 @@ class SocialNetwork extends Entity implements \JsonSerializable
     public function jsonSerialize() {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
-            if (empty($v)) {
+            if (!is_bool($v) && $v !== 0 && empty($v)) {
                 unset ($arr[$k]);
             }
         }
         return $arr;
     }
-    
 }

@@ -74,36 +74,44 @@ class PurchaseInformation extends Entity implements \JsonSerializable
      */
     private $login;
 
-    public function setLastDateInsertedMail(\DateTime $lastDateInsertedMail) {
-        $this->lastDateInsertedMail = $lastDateInsertedMail;
+    public function setLastDateInsertedMail($lastDateInsertedMail) {
+        $this->lastDateInsertedMail = $this->asString($lastDateInsertedMail);
+        return $this;
     }
 
-    public function setLastDateChangePassword(\DateTime $lastDateChangePassword) {
-        $this->lastDateChangePassword = $lastDateChangePassword;
+    public function setLastDateChangePassword($lastDateChangePassword) {
+        $this->lastDateChangePassword = $this->asString($lastDateChangePassword);
+        return $this;
     }
 
-    public function setLastDateChangePhone(\DateTime $lastDateChangePhone) {
-        $this->lastDateChangePhone = $lastDateChangePhone;
+    public function setLastDateChangePhone($lastDateChangePhone) {
+        $this->lastDateChangePhone = $this->asString($lastDateChangePhone);
+        return $this;
     }
 
-    public function setLastDateChangeMobilePhone(\DateTime $lastDateChangeMobilePhone) {
-        $this->lastDateChangeMobilePhone = $lastDateChangeMobilePhone;
+    public function setLastDateChangeMobilePhone($lastDateChangeMobilePhone) {
+        $this->lastDateChangeMobilePhone = $this->asString($lastDateChangeMobilePhone);
+        return $this;
     }
 
-    public function setLastDateInsertedAddress(\DateTime $lastDateInsertedAddress) {
-        $this->lastDateInsertedAddress = $lastDateInsertedAddress;
+    public function setLastDateInsertedAddress($lastDateInsertedAddress) {
+        $this->lastDateInsertedAddress = $this->asString($lastDateInsertedAddress);
+        return $this;
     }
 
     public function setPurchaseLogged($purchaseLogged) {
-        $this->purchaseLogged = $purchaseLogged;
+        $this->purchaseLogged = $this->asBool($purchaseLogged);
+        return $this;
     }
 
     public function setEmail($email) {
         $this->email = $email;
+        return $this;
     }
 
     public function setLogin($login) {
         $this->login = $login;
+        return $this;
     }
 
     /**
@@ -157,11 +165,10 @@ class PurchaseInformation extends Entity implements \JsonSerializable
     public function jsonSerialize() {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
-            if (empty($v)) {
+            if (!is_bool($v) && $v !== 0 && empty($v)) {
                 unset ($arr[$k]);
             }
         }
         return $arr;
     }
-    
 }

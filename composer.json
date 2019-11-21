@@ -1,7 +1,7 @@
 {
   "name": "odesenvolvedor/clearsale-php-sdk",
   "description": "ClearSale API Client",
-  "version": "1.2.3",
+  "version": "1.2.5",
   "homepage": "https://github.com/odesenvolvedor/clearsale-php-sdk",
   "license": "MIT",
   "type": "library",

@@ -289,6 +289,7 @@ class Order extends Entity implements ClearSaleSerializable, ClearSaleInterface
      */
     public function getList()
     {
+        $this->list = empty($this->list) ? new OrderList() : $this->list;
         return $this->list;
     }
 
@@ -297,6 +298,7 @@ class Order extends Entity implements ClearSaleSerializable, ClearSaleInterface
      */
     public function getPurchaseInformation()
     {
+        $this->purchaseInformation = empty($this->purchaseInformation) ? new PurchaseInformation() : $this->purchaseInformation;
         return $this->purchaseInformation;
     }
 
@@ -542,7 +544,7 @@ class Order extends Entity implements ClearSaleSerializable, ClearSaleInterface
     }
 
     public function setIsGift($isGift) {
-        $this->isGift = $isGift;
+        $this->isGift = $this->asBool($isGift);
         return $this;
     }
 
@@ -637,11 +639,10 @@ class Order extends Entity implements ClearSaleSerializable, ClearSaleInterface
     public function jsonSerialize() {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
-            if (empty($v)) {
+            if (!is_bool($v) && $v !== 0 && empty($v)) {
                 unset ($arr[$k]);
             }
         }        
         return $arr;
     }
-
 }
