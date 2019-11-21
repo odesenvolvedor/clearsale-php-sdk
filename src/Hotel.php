@@ -105,52 +105,61 @@ class Hotel extends Entity implements \JsonSerializable
     {
         return $this->asDateTimeVal($this->checkOutDate);
     }
-    
-    public function setName($name) {
+
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
 
-    public function setCity($city) {
+    public function setCity($city)
+    {
         $this->city = $city;
         return $this;
     }
 
-    public function setState($state) {
+    public function setState($state)
+    {
         $this->state = $state;
         return $this;
     }
 
-    public function setCountry($country) {
+    public function setCountry($country)
+    {
         $this->country = $country;
         return $this;
     }
 
-    public function setReservationDate(\DateTime $reservationDate) {
+    public function setReservationDate(\DateTime $reservationDate)
+    {
         $this->reservationDate = $reservationDate;
         return $this;
     }
 
-    public function setReserveExpirationDate(\DateTime $reserveExpirationDate) {
+    public function setReserveExpirationDate(\DateTime $reserveExpirationDate)
+    {
         $this->reserveExpirationDate = $reserveExpirationDate;
         return $this;
     }
 
-    public function setCheckInDate(\DateTime $checkInDate) {
+    public function setCheckInDate(\DateTime $checkInDate)
+    {
         $this->checkInDate = $checkInDate;
         return $this;
     }
 
-    public function setCheckOutDate(\DateTime $checkOutDate) {
+    public function setCheckOutDate(\DateTime $checkOutDate)
+    {
         $this->checkOutDate = $checkOutDate;
         return $this;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
             if (!is_bool($v) && $v !== 0 && empty($v)) {
-                unset ($arr[$k]);
+                unset($arr[$k]);
             }
         }
         return $arr;

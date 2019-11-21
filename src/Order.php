@@ -123,7 +123,7 @@ class Order extends Entity implements ClearSaleSerializable, ClearSaleInterface
      * @var string
      */
     private $packageID;
-    
+
     /**
      * @var \DateTime
      */
@@ -211,7 +211,7 @@ class Order extends Entity implements ClearSaleSerializable, ClearSaleInterface
     {
         return $this->code;
     }
-    
+
     /**
      * @return string
      */
@@ -219,7 +219,7 @@ class Order extends Entity implements ClearSaleSerializable, ClearSaleInterface
     {
         return $this->status;
     }
-    
+
     /**
      * @return \DateTime
      */
@@ -367,11 +367,12 @@ class Order extends Entity implements ClearSaleSerializable, ClearSaleInterface
     {
         return $this->hotels;
     }
-    
+
     /**
      * @return string
      */
-    public function getPackageID() {
+    public function getPackageID()
+    {
         return $this->packageID;
     }
 
@@ -383,7 +384,7 @@ class Order extends Entity implements ClearSaleSerializable, ClearSaleInterface
         return $this->orders;
     }
 
-        /**
+    /**
      * @param OrderList $list
      */
     public function setList(OrderList $list = null)
@@ -497,113 +498,134 @@ class Order extends Entity implements ClearSaleSerializable, ClearSaleInterface
         $this->hotels = $hotels;
         return $this;
     }
-    
-    public function setCode($code) {
+
+    public function setCode($code)
+    {
         $this->code = $this->asString($code);
         return $this;
     }
 
-    public function setSessionID($sessionID) {
+    public function setSessionID($sessionID)
+    {
         $this->sessionID = $sessionID;
         return $this;
     }
 
-    public function setDate($date) {
+    public function setDate($date)
+    {
         $this->date = $this->asDateTimeVal($date);
         return $this;
     }
 
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
         return $this;
     }
 
-    public function setB2bB2c($b2bB2c) {
+    public function setB2bB2c($b2bB2c)
+    {
         $this->b2bB2c = $b2bB2c;
         return $this;
     }
 
-    public function setItemValue($itemValue) {
+    public function setItemValue($itemValue)
+    {
         $this->itemValue = $this->asDecimal($itemValue);
         return $this;
     }
 
-    public function setTotalValue($totalValue) {
+    public function setTotalValue($totalValue)
+    {
         $this->totalValue = $this->asDecimal($totalValue);
         return $this;
     }
 
-    public function setNumberOfInstallments($numberOfInstallments) {
+    public function setNumberOfInstallments($numberOfInstallments)
+    {
         $this->numberOfInstallments = $numberOfInstallments;
         return $this;
     }
 
-    public function setIp($ip) {
+    public function setIp($ip)
+    {
         $this->ip = $ip;
         return $this;
     }
 
-    public function setIsGift($isGift) {
+    public function setIsGift($isGift)
+    {
         $this->isGift = $this->asBool($isGift);
         return $this;
     }
 
-    public function setGiftMessage($giftMessage) {
+    public function setGiftMessage($giftMessage)
+    {
         $this->giftMessage = $giftMessage;
         return $this;
     }
 
-    public function setObservation($observation) {
+    public function setObservation($observation)
+    {
         $this->observation = $observation;
         return $this;
     }
 
-    public function setStatus($status) {
+    public function setStatus($status)
+    {
         $this->status = $status;
         return $this;
     }
 
-    public function setOrigin($origin) {
+    public function setOrigin($origin)
+    {
         $this->origin = $origin;
         return $this;
     }
 
-    public function setChannelID($channelID) {
+    public function setChannelID($channelID)
+    {
         $this->channelID = $channelID;
         return $this;
     }
 
-    public function setReservationDate($reservationDate) {
+    public function setReservationDate($reservationDate)
+    {
         $this->reservationDate = $this->asDateTimeVal($reservationDate);
         return $this;
     }
 
-    public function setCountry($country) {
+    public function setCountry($country)
+    {
         $this->country = $country;
         return $this;
     }
 
-    public function setNationality($nationality) {
+    public function setNationality($nationality)
+    {
         $this->nationality = $nationality;
         return $this;
     }
 
-    public function setProduct($product) {
+    public function setProduct($product)
+    {
         $this->product = $product;
         return $this;
     }
 
-    public function setCustomSla($customSla) {
+    public function setCustomSla($customSla)
+    {
         $this->customSla = $customSla;
         return $this;
     }
 
-    public function setBankAuthentication($bankAuthentication) {
+    public function setBankAuthentication($bankAuthentication)
+    {
         $this->bankAuthentication = $bankAuthentication;
         return $this;
     }
-    
-   /**
+
+    /**
      * @param $json
      *
      * @return Order
@@ -635,14 +657,15 @@ class Order extends Entity implements ClearSaleSerializable, ClearSaleInterface
             }
         }
     }
-    
-    public function jsonSerialize() {
+
+    public function jsonSerialize()
+    {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
             if (!is_bool($v) && $v !== 0 && empty($v)) {
-                unset ($arr[$k]);
+                unset($arr[$k]);
             }
-        }        
+        }
         return $arr;
     }
 }

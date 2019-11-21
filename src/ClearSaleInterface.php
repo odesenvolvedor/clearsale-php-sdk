@@ -37,18 +37,18 @@ namespace ClearSale;
  *
  * @author fernando
  */
-interface ClearSaleInterface {
+interface ClearSaleInterface
+{
 
-   /**
-     * @param $json
-     *
-     * @return Sale
-     */
-    public static function fromJson($json);
-    
-    /**
-     * @param \stdClass $data
-     */
-    public function populate(\stdClass $data);
-    
+  /**
+   * @param $json
+   *
+   * @return Sale
+   */
+  public static function fromJson($json);
+
+  /**
+   * @param \stdClass $data
+   */
+  public function populate(\stdClass $data);
 }

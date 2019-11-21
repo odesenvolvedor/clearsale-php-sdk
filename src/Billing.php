@@ -107,11 +107,12 @@ class Billing extends Entity implements \JsonSerializable
     /**
      * @return Address
      */
-    public function getAddress() {
+    public function getAddress()
+    {
         $this->address = empty($this->address) ? new Address() : $this->address;
         return $this->address;
     }
-        
+
     /**
      * @param string $gender
      */
@@ -159,42 +160,49 @@ class Billing extends Entity implements \JsonSerializable
         $this->phones = $phones;
         return $this;
     }
-    
-    public function setClientID($clientID) {
+
+    public function setClientID($clientID)
+    {
         $this->clientID = $this->asString($clientID);
         return $this;
     }
 
-    public function setPrimaryDocument($primaryDocument) {
+    public function setPrimaryDocument($primaryDocument)
+    {
         $this->primaryDocument = $primaryDocument;
         return $this;
     }
 
-    public function setSecondaryDocument($secondaryDocument) {
+    public function setSecondaryDocument($secondaryDocument)
+    {
         $this->secondaryDocument = $secondaryDocument;
         return $this;
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
         return $this;
     }
 
-    public function setBirthDate($birthDate) {
+    public function setBirthDate($birthDate)
+    {
         $this->birthDate = $this->asDateTimeVal($birthDate);
         return $this;
     }
 
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
         return $this;
-    }    
-    
-    public function jsonSerialize() {
+    }
+
+    public function jsonSerialize()
+    {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
             if (!is_bool($v) && $v !== 0 && empty($v)) {
-                unset ($arr[$k]);
+                unset($arr[$k]);
             }
         }
         return $arr;

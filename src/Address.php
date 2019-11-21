@@ -51,9 +51,9 @@ class Address extends Entity implements \JsonSerializable
 
     /**
      * @var string
-     */    
+     */
     private $county;
-    
+
     /**
      * @var string
      */
@@ -78,57 +78,67 @@ class Address extends Entity implements \JsonSerializable
      * @var string
      */
     private $reference;
-    
-    public function setStreet($street) {
+
+    public function setStreet($street)
+    {
         $this->street = $street;
         return $this;
     }
 
-    public function setNumber($number) {
+    public function setNumber($number)
+    {
         $this->number = $number;
         return $this;
     }
 
-    public function setAdditionalInformation($additionalInformation) {
+    public function setAdditionalInformation($additionalInformation)
+    {
         $this->additionalInformation = $additionalInformation;
         return $this;
     }
 
-    public function setCounty($county) {
+    public function setCounty($county)
+    {
         $this->county = $county;
         return $this;
     }
-    
-    public function setCity($city) {
+
+    public function setCity($city)
+    {
         $this->city = $city;
         return $this;
     }
 
-    public function setState($state) {
+    public function setState($state)
+    {
         $this->state = $state;
         return $this;
     }
 
-    public function setCountry($country) {
+    public function setCountry($country)
+    {
         $this->country = $country;
         return $this;
     }
 
-    public function setZipcode($zipcode) {
+    public function setZipcode($zipcode)
+    {
         $this->zipcode = $zipcode;
         return $this;
     }
 
-    public function setReference($reference) {
+    public function setReference($reference)
+    {
         $this->reference = $reference;
         return $this;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
             if (!is_bool($v) && $v !== 0 && empty($v)) {
-                unset ($arr[$k]);
+                unset($arr[$k]);
             }
         }
         return $arr;

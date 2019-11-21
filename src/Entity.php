@@ -93,9 +93,9 @@ abstract class Entity
         if (!is_bool($val)) {
             return boolval($val);
         }
-        return $val;        
+        return $val;
     }
-    
+
     protected function asString($val)
     {
         if (is_null($val)) {
@@ -106,5 +106,4 @@ abstract class Entity
         }
         return $val;
     }
-                
 }

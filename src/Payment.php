@@ -189,57 +189,67 @@ class Payment extends Entity implements \JsonSerializable
         $this->card = $card;
         return $this;
     }
-    
-    public function setSequential($sequential) {
+
+    public function setSequential($sequential)
+    {
         $this->sequential = $this->asInteger($sequential);
         return $this;
     }
 
-    public function setDate($date) {
+    public function setDate($date)
+    {
         $this->date = $this->asDateTimeVal($date);
         return $this;
     }
 
-    public function setValue($value) {
+    public function setValue($value)
+    {
         $this->value = $this->asDecimal($value);
         return $this;
     }
 
-    public function setType($type) {
+    public function setType($type)
+    {
         $this->type = $this->asInteger($type);
         return $this;
     }
 
-    public function setInstallments($installments) {
+    public function setInstallments($installments)
+    {
         $this->installments = $this->asInteger($installments);
         return $this;
     }
 
-    public function setInterestRate($interestRate) {
+    public function setInterestRate($interestRate)
+    {
         $this->interestRate = $this->asDecimal($interestRate);
         return $this;
     }
 
-    public function setInterestValue($interestValue) {
+    public function setInterestValue($interestValue)
+    {
         $this->interestValue = $this->asDecimal($interestValue);
         return $this;
     }
 
-    public function setCurrency($currency) {
+    public function setCurrency($currency)
+    {
         $this->currency = $this->asInteger($currency);
         return $this;
     }
 
-    public function setVoucherOrderOrigin($voucherOrderOrigin) {
+    public function setVoucherOrderOrigin($voucherOrderOrigin)
+    {
         $this->voucherOrderOrigin = $voucherOrderOrigin;
         return $this;
     }
 
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         $arr = get_object_vars($this);
         foreach ($arr as $k => $v) {
             if (!is_bool($v) && $v !== 0 && empty($v)) {
-                unset ($arr[$k]);
+                unset($arr[$k]);
             }
         }
         return $arr;
