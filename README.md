@@ -155,4 +155,6 @@ try {
 ```
 # === doar-paypal-brasil ===
 #### Contributors: Fernando Campos (odesenvolvedor)  
-#### Donate account PayPal: fernando@odesenvolvedor.net  
+#### Donate account PayPal
+![QR Code](https://user-images.githubusercontent.com/24375017/95643906-d4fb4880-0a88-11eb-9d2f-944d4d686fff.png)
+
